@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <style>
+      .container {
+        border: 2px solid black;
+        width: 250px;
+        height: 250px;
+        margin: 50px;
+        animation: index 1s infinite alternate;
+        animation-timing-function: ease-in-out;
+
+        /* animation-name: index;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate; */
+      }
+
+      @keyframes index {
+        from {
+          border-radius: 0%;
+        }
+
+        to {
+          border-radius: 100%;
+          background-color: blue;
+        }
+      }
+
+      .txt {
+        text-align: center;
+        line-height: 150px;
+        font-size: 60px;
+      }
+    </style>
+
+    <div class="container">
+      <div class="txt">Rushi</div> 
+    </div>
+  </body>
+</html>
