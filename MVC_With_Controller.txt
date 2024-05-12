@@ -1,0 +1,30 @@
+Model----------->
+
+Student class
+
+        [Key]
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+        public int Quantity { get; set; }
+
+      
+DAL folder --------> 
+MyDbContext:DbContext
+Nuget packages
+import core to resolve error
+clicl on bulb icon->Parametrized constructor
+below that 
+public DbSet<Student> Students{ get; set; }
+
+appsetting ------->
+"MyAppDbConnection": "server=(LocalDB)\\MSSQLLocalDB;database=MyDataa;Integrated Security=True;TrustServerCertificate=true",
+
+
+programs-------->
+builder.Services.AddDbContext<MyDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MyAppDbConnection")));
+
+Manage nudget Console-------->
+add-migration init
+update-database
+
