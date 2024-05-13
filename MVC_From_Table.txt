@@ -1,0 +1,123 @@
+1----->
+Views->shared->Layout->
+delete header footer main
+
+2----->
+Views->Home->Index->
+Complete delete previous and add this
+
+@{
+    ViewData["Title"] = "Display Data";
+    string[] TableHeaders = new string[] { "Id  ", "Name  ", "Address" };
+}
+
+<div class="table">
+    <table class="table table-bordered table-hover">
+        <thread>
+            <tr>
+                @{
+                foreach (var head in TableHeaders)
+                {
+                    <th>
+                        @head
+                    </th>
+                }
+               }
+            </tr>
+        </thread>
+        <tbody>
+            @{
+                if (Model != null)
+                {
+                    foreach (var Data in Model)
+                    {
+                        <tr>
+                            <td>@Data.Id</td>
+                            <td>@Data.Name</td>
+                            <td>@Data.Address</td>
+                        </tr>
+                    }
+
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+3------->
+
+Add nudget packages 
+System.Data.SqlClient;
+Microsoft.....Types;
+
+in class on first line write  
+ SqlCommand com = new SqlCommand();
+ SqlDataReader dr;
+ SqlConnection con = new SqlConnection();
+ List<Student> students=new List<Student>();
+
+
+click on Project on header-->Last option(TableToUI properties)
+Resources.resx  === 
+name:  ConnectionString
+Value: Data Source=(LocalDB)\MSSQLLocalDB;database=aarti;Integrated Security=True;
+Comment: Sql Server Connection
+
+
+then in HomeController.cs 
+
+public HomeController(ILogger<HomeController> logger)
+{
+    _logger = logger;
+    con.ConnectionString = TableToUI.Properties.Resources.ConnectionString;
+}
+
+
+private void fetchData()
+{
+    if(students.Count>0)
+    {
+        students.Clear();
+    }
+    try
+    {
+        con.Open();
+        com.Connection = con;
+        com.CommandText = "SELECT TOP 1000 [Id] ,[Name] ,[Address] FROM [dbo].[Table]";
+        dr = com.ExecuteReader();
+        while(dr.Read())
+        {
+            students.Add(new Student()
+            {
+                Id = dr["Id"].ToString(),
+                Name = dr["Name"].ToString(),
+                Address = dr["Address"].ToString()
+            });
+        }
+        con.Close();
+    }
+    catch (Exception ex)
+    {
+        throw ex;
+    }
+}
+
+public IActionResult Index()
+{
+    fetchData();
+    return View(students);
+}
+
+
+4------>
+create one class in model
+
+public class Student
+{
+    public int Id { get; set; }
+    public string Name {  get; set; }
+    public string Address { get; set; }
+}
